@@ -24,61 +24,39 @@
 
 from abc import ABC, abstractmethod
 
-class Weapon(ABC):# Создайте абстрактный класс Weapon, который будет содержать абстрактный метод attack().
-    @abstractmethod
+class Weapon(ABC):# Создайте абстрактный класс Weapon, который будет содержать абстрактный метод attack(). абстрактный это значит пустой
+    @abstractmethod # декоратор для абстрактной функции
     def attack(self):
         pass
 
 class Sword(Weapon): # Создайте несколько классов, унаследованных от Weapon, например, Sword и Bow.
     def attack(self):
-        return ("Удар мечем")
+        return ("Боец наносит удар мечом.")
 
 class Bow(Weapon): # Создайте несколько классов, унаследованных от Weapon, например, Sword и Bow.
     def attack(self):
-        return ("Удар из лука.")
+        return ("Боец наносит удар из лука.")
 
 class Fighter: # Шаг 3: Модифицируйте класс Fighter
-    def __init__(self):
-        self.weapon = None
-
-    def changeWeapon(self, weapon):
+    def __init__(self, weapon: Weapon): #:weapon это какой тип должен хранится в этой переменной, в нашем случае обьект класса weapon
         self.weapon = weapon
 
-    def attack(self):
-        if self.weapon:
-            return "Боец наносит " + self.weapon.attack()
-        else:
-            return "Боец не вооружен"
+    def changeWeapon(self, weapon: Weapon):
+        self.weapon = weapon
 
-    def winBattle(self):
-        print("Монстр побежден!")
+    def fight(self):
+        print(self.weapon.attack())
 
 class Monster:
-    def __init__(self):
-        pass
-    def attack(self):
-        return "Монстр атакует!"
+    pass
 
-    def winBattle(self):
-        print("Монстр побежден!")
+sword1 = Sword()
+bow1 = Bow()
 
-fighter = Fighter()
-monster = Monster()
-
-
-fighter.changeWeapon(Sword())
-print("Боец выбирает меч.")
-print(fighter.attack())
-print(monster.attack())
-fighter.winBattle()
-
-fighter.changeWeapon(Bow())
-print("Боец выбирает лук.")
-print(fighter.attack())
-print(monster.attack())
-fighter.winBattle()
-
-
+fighter = Fighter(sword1)
+fighter.fight()
+fighter.changeWeapon(bow1)
+fighter.fight()
 
 
 
